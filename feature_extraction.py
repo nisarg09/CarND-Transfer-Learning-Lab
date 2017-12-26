@@ -1,7 +1,7 @@
 import pickle
 import tensorflow as tf
 # TODO: import Keras layers you need here
-mport numpy as np
+import numpy as np
 from keras.layers import Input, Flatten, Dense
 from keras.models import Model
 
@@ -55,7 +55,7 @@ def main(_):
     # TODO: train your model here
     input_shape = X_train.shape[1:]
     inp = Input(shape=input_shape)
-    x = Flatten(inp)
+    x = Flatten()(inp)
     x = Dense(nb_classes, activation='softmax')(x)
     model = Model(inp,x)
     model.compile(optimizer='adam', loss='spare_catagorial_crossentropy', metrics=['accuracy'])
