@@ -1,7 +1,7 @@
 import pickle
 import tensorflow as tf
 # TODO: import Keras layers you need here
-mport numpy as np
+import numpy as np
 from keras.layers import Input, Flatten, Dense
 from keras.models import Model
 
@@ -11,8 +11,8 @@ FLAGS = flags.FLAGS
 # command line flags
 flags.DEFINE_string('training_file', '', "Bottleneck features training file (.p)")
 flags.DEFINE_string('validation_file', '', "Bottleneck features validation file (.p)")
-flags.DEFINE_integer('epochs', 50, "The number of epochs.")
-flags.DEFINE_integer('batch_size', 256, "The batch size.")
+#flags.DEFINE_integer('batch_size', 256, "The batch size.")
+#flags.DEFINE_integer('epochs', 50, "The number of epochs.")
 
 
 def load_bottleneck_data(training_file, validation_file):
@@ -55,12 +55,12 @@ def main(_):
     # TODO: train your model here
     input_shape = X_train.shape[1:]
     inp = Input(shape=input_shape)
-    x = Flatten(inp)
+    x = Flatten()(inp)
     x = Dense(nb_classes, activation='softmax')(x)
     model = Model(inp,x)
-    model.compile(optimizer='adam', loss='spare_catagorial_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
-    model.fit(X_train, y_train, epochs=FLAGS.epochs, batch_size=FLAGS.batch_size, validation_data=(X_val, y_val), shuffle=True)
+    model.fit(X_train, y_train, batch_size=256, epochs=50, validation_data=(X_val, y_val), shuffle=True)
 
 
 
